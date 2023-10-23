@@ -29,6 +29,7 @@
         <!-- Horizontal Category List -->
         <div class="category-list">
             <b-list-group horizontal class="justify-content-center">
+                <b-list-group-item to="/">신제품</b-list-group-item>
                 <b-list-group-item to="/food">식품</b-list-group-item>
                 <b-list-group-item to="/furniture">가구</b-list-group-item>
                 <b-list-group-item to="/electronics">전자</b-list-group-item>

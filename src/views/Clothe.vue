@@ -1,6 +1,6 @@
 
 <script>
 export default {
-    name: 'BookView'
+    name: 'ClothView'
 }
 </script>

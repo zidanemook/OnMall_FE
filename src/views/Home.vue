@@ -1,7 +1,7 @@
 
 
 <template>
-    <div class="best-list">
+    <div class="recent-list">
       <ul v-if="products && products.length">
         <li v-for="product in products" :key="product.id">
           <div class="img">
@@ -93,11 +93,11 @@ export default {
 
 <style scoped>
 
-.best-list{
+.recent-list{
   margin-top: 50px;
 }
 
-.best-list ul li {
+.recent-list ul li {
     position: relative;
     display: inline;
     float: left;
