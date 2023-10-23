@@ -4,7 +4,8 @@ import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
 import Login from '@/views/Login.vue'
 import Signup from '@/views/Signup.vue'
-import Food from '@/views/Food.vue'
+import Mypage from '@/views/Mypage.vue'
+import ProductDetail from '../views/ProductDetail.vue';
 
 Vue.use(VueRouter)
 
@@ -27,9 +28,16 @@ const routes = [
     meta: { hideHeader: true }
   },
   {
-    path: '/food',
-    name: 'Food',
-    component: Food
+    path: '/mypage',
+    name: 'Mypage',
+    component: Mypage
+  },
+  {
+    path: '/productdetail/:id',
+    name: 'productdetail',
+    component: ProductDetail,
+    props: true,
+    meta: { hideHeader: true }
   }
 ]
 
