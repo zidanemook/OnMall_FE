@@ -2,8 +2,8 @@
 
 <template>
     <div class="recent-list">
-      <ul v-if="products && products.length">
-        <li v-for="product in products" :key="product.id">
+      <ul v-if="receivedProducts && receivedProducts.length">
+        <li v-for="product in receivedProducts" :key="product.id">
           <div class="img">
             <router-link :to="`/productdetail/${product.id}`">
               <img :src="product.photo" alt="product.productname">
@@ -34,59 +34,49 @@
         </span>
         <button @click="nextPage" :disabled="currentPage + 1 === totalPages">Next</button>
         <button @click="goToPage(totalPages - 1)" :disabled="currentPage + 1 === totalPages">Last</button>
-      </div>
+    </div>
 
     </div>
 </template>
 
 <script>
-
-import axios from 'axios';
+import { mapState } from 'vuex';
+//import axios from 'axios';
 
 export default {
   name: 'HomeView',
     data() {
         return {
-            products: [],
-            currentPage: 0,
-            totalPages: 0,
-            pageSize: 20
+            //products: [],
+          
         }
     },
     computed: {
-        pageNumbers() {
-            return [...Array(this.totalPages).keys()];
-        }
+      ...mapState(['receivedProducts', 'currentPage', 'totalPages', 'pageSize']),
+      pageNumbers() {
+        return [...Array(this.totalPages).keys()];
+      }
     },
     async created() {
-        await this.fetchProducts();
+      await this.$store.dispatch('fetchGetProducts');
     },
     methods: {
-        async fetchProducts() {
-            try {
-                const response = await axios.get(`http://localhost:8080/product/recent?page=${this.currentPage}&size=${this.pageSize}`);
-                this.products = response.data.data.content;
-                this.totalPages = response.data.data.totalPages;
-            } catch (error) {
-                console.error("Error fetching products", error);
-            }
-        },
-        async nextPage() {
-            if (this.currentPage + 1 < this.totalPages) {
-                this.currentPage++;
-                await this.fetchProducts();
-            }
-        },
-        async prevPage() {
-            if (this.currentPage > 0) {
-                this.currentPage--;
-                await this.fetchProducts();
-            }
-        },
-        async goToPage(page) {
-            this.currentPage = page;
-            await this.fetchProducts();
-        }
+      async nextPage() {
+      if (this.currentPage + 1 < this.totalPages) {
+          this.$store.commit('INCREMENT_CURRENT_PAGE');
+          await this.$store.dispatch('fetchGetProducts');
+      }
+      },
+      async prevPage() {
+          if (this.currentPage > 0) {
+              this.$store.commit('DECREMENT_CURRENT_PAGE');
+              await this.$store.dispatch('fetchGetProducts');
+          }
+      },
+      async goToPage(page) {
+          this.$store.commit('SET_CURRENT_PAGE', page);
+          await this.$store.dispatch('fetchGetProducts');
+      }
     }
 }
 </script>

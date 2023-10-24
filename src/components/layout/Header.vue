@@ -1,9 +1,11 @@
+// src/layout/Header.vue
+
 <template>
     <div>
         <div class ="header">
             <!-- Navbar -->
-            <div class="box-brand">
-                <a href="/" class="navbar-brand">MOOKMALL</a>
+            <div class="box-brand" @click="selectProductType(ProductType.PRODUCT_TYPE_ALL)">
+                <a class="navbar-brand">MOOKMALL</a>
             </div>
 
             <div class="box-search">
@@ -22,22 +24,38 @@
                 <button class="logout-btn" @click="logout">로그아웃</button>
             </div>
 
-
         </div>
     
 
         <!-- Horizontal Category List -->
         <div class="category-list">
             <b-list-group horizontal class="justify-content-center">
-                <b-list-group-item to="/">신제품</b-list-group-item>
-                <b-list-group-item to="/food">식품</b-list-group-item>
-                <b-list-group-item to="/furniture">가구</b-list-group-item>
-                <b-list-group-item to="/electronics">전자</b-list-group-item>
-                <b-list-group-item to="/clothes">의류</b-list-group-item>
-                <b-list-group-item to="/book">도서</b-list-group-item>
-                <b-list-group-item to="/life">생활</b-list-group-item>
+                <b-list-group-item @click="selectProductType(ProductType.PRODUCT_TYPE_ALL)" class="hover-item">신제품</b-list-group-item>
+                <b-list-group-item @click="selectProductType(ProductType.PRODUCT_TYPE_FOOD)" class="hover-item">식품</b-list-group-item>
+                <b-list-group-item @click="selectProductType(ProductType.PRODUCT_TYPE_FURNITURE)" class="hover-item">가구</b-list-group-item>
+                <b-list-group-item @click="selectProductType(ProductType.PRODUCT_TYPE_ELECTRONICS)" class="hover-item">전자</b-list-group-item>
+                <b-list-group-item @click="selectProductType(ProductType.PRODUCT_TYPE_CLOTHE)" class="hover-item">의류</b-list-group-item>
+                <b-list-group-item @click="selectProductType(ProductType.PRODUCT_TYPE_BOOK)" class="hover-item">도서</b-list-group-item>
+                <b-list-group-item @click="selectProductType(ProductType.PRODUCT_TYPE_LIFE)" class="hover-item">생활</b-list-group-item>
             </b-list-group>
+
+            <!-- orderType 선택 드롭다운 -->
+            <div class="dropdown-container">
+                <select v-model="selectedOrderType">
+                    <option v-for="orderType in orderTypes" :key="orderType" :value="orderType"> {{ orderType }} </option>
+                </select>
+            </div>
+
+            <!-- sortOrder 선택 드롭다운 -->
+            <div class="dropdown-container">
+                <select v-model="selectedSortOrder">
+                    <option v-for="order in sortOrders" :key="order" :value="order">{{ order }}</option>
+                </select>
+            </div>
+
         </div>
+
+        
 
     </div>
 </template>
@@ -46,20 +64,47 @@
 <script>
 import { mapState } from 'vuex';
 import axios from 'axios';
+import { ProductType, OrderType, SortOrder } from '../enum/enum.js'; 
+
 
 export default {
     name: "HeaderLayout",
     data() {
         return {
-            isMenuOpen: false
+            isMenuOpen: false,
+            selectedOrderType: '',
+            selectedSortOrder: '',
+            orderTypes: Object.values(OrderType),
+            sortOrders: Object.values(SortOrder),
+            ProductType: ProductType
         };
     },
+
+    watch: {
+            selectedOrderType(newVal) {
+                this.$store.commit('SET_SELECTED_ORDER_TYPE', newVal);
+                this.$store.dispatch('fetchGetProducts');
+            },
+
+            selectedSortOrder(newVal) {
+                this.$store.commit('SET_SELECTED_SORT_ORDER', newVal);
+                this.$store.dispatch('fetchGetProducts');
+            }
+            
+    },
+
     computed: {
         ...mapState(['isLoggedIn'])  // Vuex 스토어의 isLoggedIn 상태를 매핑
+        
     },
     methods: {
         toggleMenu() {
             this.isMenuOpen = !this.isMenuOpen;
+        },
+
+        selectProductType(newVal) {
+            this.$store.commit('SET_SELECTED_PRODUCT_TYPE', newVal);
+            this.$store.dispatch('fetchGetProducts');
         },
 
         async logout() {
@@ -103,6 +148,11 @@ export default {
     background-color: orange;
 }
 
+.box-brand:hover {
+    background-color: #fab464;
+    cursor: pointer;
+}
+
 .navbar-brand {
     font-weight: bold;
     font-size: 1.5rem;
@@ -138,9 +188,14 @@ export default {
 
 }
 
-
 .category-list {
-    margin-top: 20px;  /* 필요한 경우 마진을 조절할 수 있습니다. */
+    margin-top: 20px;
+    display: inline-flex
+}
+
+.hover-item:hover {
+    background-color: #f5f5f5 !important;
+    cursor: pointer;
 }
 
 .list-group-item {
@@ -151,6 +206,12 @@ export default {
 .list-group-item-action {
     width: 7%;
     color: #030d16;
+}
+
+.dropdown-container{
+    
+    margin-top: 10px;
+    margin-left: 20px;
 }
 
 
