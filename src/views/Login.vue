@@ -49,6 +49,11 @@
         errorMessage: null,
       };
     },
+    computed: {
+        apiEndpoint() {
+            return this.$store.state.apiEndpoint;
+        }
+    },
     methods: {
       async onSubmit(event) {
         event.preventDefault();
@@ -56,7 +61,7 @@
         //console.log(this.email);
 
         try {
-          const response = await axios.post('http://localhost:8080/login', {
+          const response = await axios.post(`${this.apiEndpoint}login`, {
             email: this.email,
             password: this.password,
           });

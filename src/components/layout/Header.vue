@@ -94,8 +94,10 @@ export default {
     },
 
     computed: {
-        ...mapState(['isLoggedIn'])  // Vuex 스토어의 isLoggedIn 상태를 매핑
-        
+        ...mapState(['isLoggedIn']),  // Vuex 스토어의 isLoggedIn 상태를 매핑
+        apiEndpoint() {
+            return this.$store.state.apiEndpoint;
+        }
     },
     methods: {
         toggleMenu() {
@@ -118,7 +120,7 @@ export default {
                 this.$store.commit('SET_LOGIN_STATE', false);
 
                 // 백엔드로 로그아웃 요청
-                await axios.post('http://localhost:8080/auth/logout', {}, {
+                await axios.post(`${this.apiEndpoint}auth/logout`, {}, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                         RefreshToken: `Bearer ${localStorage.getItem('refreshToken')}`

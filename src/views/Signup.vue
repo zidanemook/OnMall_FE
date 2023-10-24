@@ -70,7 +70,7 @@
         }
 
         try {
-          const response = await axios.post('http://localhost:8080/signup', {
+          const response = await axios.post(`${this.apiEndpoint}signup`, {
             email: this.email,
             username: this.username,
             password: this.password,

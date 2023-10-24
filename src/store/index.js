@@ -8,6 +8,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    apiEndpoint: process.env.VUE_APP_API_ENDPOINT,
     isLoggedIn: !!localStorage.getItem('refreshToken'),
     selectedOrderType: 'CREATED_AT',
     selectedSortOrder: 'DESCENDING',
@@ -60,14 +61,14 @@ export default new Vuex.Store({
       };
       
       try {
-          const response = await axios.get('http://localhost:8080/product', { params: params });
+          const response = await axios.get(`${state.apiEndpoint}product`, { params: params });
           commit('SET_RECEIVED_PRODUCTS', response.data.data.content);
           commit('SET_TOTAL_PAGE', response.data.data.totalPages);
           commit('SET_CURRENT_PAGE', 0);
       } catch (error) {
           console.error('Error fetching products:', error);
       }
-  }
+    }
   }
   
 });

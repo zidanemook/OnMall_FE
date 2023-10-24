@@ -84,7 +84,7 @@ export default {
     },
     created() {
         this.productId = this.$route.params.id;
-        axios.get(`http://localhost:8080/productdetail?productid=${this.productId}`)
+        axios.get(`${this.apiEndpoint}productdetail?productid=${this.productId}`)
         .then(response => {
             const product = response.data.data;
             this.productName = product.productname;
@@ -101,7 +101,7 @@ export default {
         if(this.$store.state.isLoggedIn === true){
             const token = localStorage.getItem('accessToken');
 
-            axios.get(`http://localhost:8080/auth/currentrating?productId=${this.productId}`, {
+            axios.get(`${this.apiEndpoint}auth/currentrating?productId=${this.productId}`, {
                 headers: {
                     'Authorization': 'Bearer ' + token
                 }
@@ -119,6 +119,9 @@ export default {
     computed: {
         isLoggedIn() {
             return this.$store.state.isLoggedIn;
+        },
+        apiEndpoint() {
+            return this.$store.state.apiEndpoint;
         }
     },
     methods: {
@@ -140,7 +143,7 @@ export default {
 
             try {
                 // axios를 사용하여 서버에 별점과 제품 ID를 전송합니다.
-                const response = await axios.post(`http://localhost:8080/auth/rating`,
+                const response = await axios.post(`${this.apiEndpoint}auth/rating`,
                     {
                         score: this.currentRating,
                         productId: this.productId
