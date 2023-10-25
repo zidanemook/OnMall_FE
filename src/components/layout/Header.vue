@@ -123,10 +123,10 @@ export default {
 
         selectProductType(newVal) {
 
+            this.$store.commit('SET_CURRENT_PAGE', 0);
+
             // "MOOKMALL"을 클릭했을 때만 해당 조건문 내의 코드 실행
             if (newVal === ProductType.PRODUCT_TYPE_ALL) {
-
-                this.$store.commit('SET_CURRENT_PAGE', 0);
 
                 this.selectedOrderType = 'CREATED_AT'
                 this.selectedSortOrder = 'DESCENDING';
