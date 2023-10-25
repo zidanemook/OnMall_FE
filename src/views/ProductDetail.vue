@@ -190,19 +190,24 @@ export default {
         display: flex;
     }
 
-    .product-image{
-        position: relative;
-        display: inline-block;
-        margin-top: 100px;
-        margin-right: 10px;
+    .product-image img {
+        margin-top: 70px;
+        width: 500px;
+        max-width: 100%;  /* 최대 너비는 부모 요소의 100%를 넘지 않도록 설정 */
     }
 
-    .product-image img {
-        width: 500px;
+
+    @media (max-width: 768px) {
+        .product-image img {
+            width: 60%;  /* 이미지의 너비를 부모 요소의 100%로 설정 */
+        }
+        .product-box {
+            display: block;
+        }
     }
 
     .product-info {
-        position: relative;
+
         margin-top: 100px;
     }
 
@@ -215,7 +220,7 @@ export default {
     }
 
     .basket-btn{
-        margin-top: 210px;
+        margin-top: 110px;
     }
 
     .purchase-btn{
