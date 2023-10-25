@@ -1,9 +1,10 @@
 export const OrderType = {
-    CREATED_AT: "CREATED_AT",
-    COMMENT: "COMMENT",
-    RATING: "RATING",
-    PRICE: "PRICE"
+    CREATED_AT: { label: "등록일", value: "CREATED_AT" },
+    COMMENT: { label: "댓글수", value: "COMMENT" },
+    RATING: { label: "평점", value: "RATING" },
+    PRICE: { label: "가격", value: "PRICE" }
 }
+
 
 export const ProductType = {
     PRODUCT_TYPE_BOOK: "PRODUCT_TYPE_BOOK",
@@ -16,6 +17,6 @@ export const ProductType = {
 }
 
 export const SortOrder = {
-    ASCENDING: "ASCENDING",
-    DESCENDING: "DESCENDING"
+    ASCENDING: { label: "오름차순", value: "ASCENDING" },
+    DESCENDING: { label: "내림차순", value: "DESCENDING" }
 }

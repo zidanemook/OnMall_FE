@@ -16,7 +16,8 @@ export default new Vuex.Store({
     receivedProducts: [],
     currentPage: 0,
     totalPages: 0,
-    pageSize: 20
+    pageSize: 20,
+    searchKeyword: '',
   },
   mutations: {
     SET_LOGIN_STATE(state, status) {
@@ -45,7 +46,10 @@ export default new Vuex.Store({
     },
     SET_TOTAL_PAGE(state, page){
         state.totalPages = page
-    }
+    },
+    SET_SEARCH_KEYWORD(state, keyword) {
+      state.searchKeyword = keyword;
+    },
   },
   actions: {
     setLoginState({ commit }, status) {
@@ -57,7 +61,8 @@ export default new Vuex.Store({
           productType: state.selectedCategory,
           sortOrder: state.selectedSortOrder,
           page: state.currentPage,
-          size: state.pageSize
+          size: state.pageSize,
+          keyword: state.searchKeyword,
       };
       
       try {

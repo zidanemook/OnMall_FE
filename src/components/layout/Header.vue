@@ -9,7 +9,9 @@
             </div>
 
             <div class="box-search">
-                <input type="text" placeholder="검색..." class="search-input">
+                <input type="text" placeholder="검색..." v-model="searchKeyword" class="search-input"> 
+                <!-- Bind the input to the data property -->
+                <button @click="searchProducts">검색</button> <!-- Add search button -->
             </div>
 
             <!-- 로그인되지 않았을 때 표시 -->
@@ -42,16 +44,17 @@
             <!-- orderType 선택 드롭다운 -->
             <div class="dropdown-container">
                 <select v-model="selectedOrderType">
-                    <option v-for="orderType in orderTypes" :key="orderType" :value="orderType"> {{ orderType }} </option>
+                    <option v-for="orderType in orderTypes" :key="orderType.value" :value="orderType.value"> {{ orderType.label }} </option>
                 </select>
             </div>
 
             <!-- sortOrder 선택 드롭다운 -->
             <div class="dropdown-container">
                 <select v-model="selectedSortOrder">
-                    <option v-for="order in sortOrders" :key="order" :value="order">{{ order }}</option>
+                    <option v-for="order in sortOrders" :key="order.value" :value="order.value">{{ order.label }}</option>
                 </select>
             </div>
+
 
         </div>
 
@@ -76,7 +79,7 @@ export default {
             selectedSortOrder: 'DESCENDING',
             orderTypes: Object.values(OrderType),
             sortOrders: Object.values(SortOrder),
-            ProductType: ProductType
+            ProductType: ProductType,
         };
     },
 
@@ -95,6 +98,16 @@ export default {
 
     computed: {
         ...mapState(['isLoggedIn']),  // Vuex 스토어의 isLoggedIn 상태를 매핑
+        
+        searchKeyword: {
+            get() {
+                return this.$store.state.searchKeyword;
+            },
+            set(value) {
+                this.$store.commit('SET_SEARCH_KEYWORD', value);
+            }
+        },
+        
         apiEndpoint() {
             return this.$store.state.apiEndpoint;
         }
@@ -145,8 +158,12 @@ export default {
         },
         
         goTo(path) {
-        this.$router.push(path);
-    }
+            this.$router.push(path);
+        },
+
+        searchProducts() {
+            this.selectProductType(this.$store.state.selectedCategory);
+        },
     }
 };
 </script>
