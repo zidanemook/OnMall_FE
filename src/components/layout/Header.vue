@@ -72,8 +72,8 @@ export default {
     data() {
         return {
             isMenuOpen: false,
-            selectedOrderType: '',
-            selectedSortOrder: '',
+            selectedOrderType: 'CREATED_AT',
+            selectedSortOrder: 'DESCENDING',
             orderTypes: Object.values(OrderType),
             sortOrders: Object.values(SortOrder),
             ProductType: ProductType
@@ -105,6 +105,19 @@ export default {
         },
 
         selectProductType(newVal) {
+
+            // "MOOKMALL"을 클릭했을 때만 해당 조건문 내의 코드 실행
+            if (newVal === ProductType.PRODUCT_TYPE_ALL) {
+
+                this.$store.commit('SET_CURRENT_PAGE', 0);
+
+                this.selectedOrderType = 'CREATED_AT'
+                this.selectedSortOrder = 'DESCENDING';
+
+                this.$store.commit('SET_SELECTED_ORDER_TYPE', 'CREATED_AT');
+                this.$store.commit('SET_SELECTED_SORT_ORDER','DESCENDING');
+            }
+
             this.$store.commit('SET_SELECTED_PRODUCT_TYPE', newVal);
             this.$store.dispatch('fetchGetProducts');
         },
@@ -192,7 +205,7 @@ export default {
 
 .category-list {
     margin-top: 20px;
-    display: inline-flex
+
 }
 
 .hover-item:hover {
@@ -211,7 +224,8 @@ export default {
 }
 
 .dropdown-container{
-    
+    position: relative;
+    display: inline-block;
     margin-top: 10px;
     margin-left: 20px;
 }

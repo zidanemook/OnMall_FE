@@ -64,7 +64,6 @@ export default new Vuex.Store({
           const response = await axios.get(`${state.apiEndpoint}product`, { params: params });
           commit('SET_RECEIVED_PRODUCTS', response.data.data.content);
           commit('SET_TOTAL_PAGE', response.data.data.totalPages);
-          commit('SET_CURRENT_PAGE', 0);
       } catch (error) {
           console.error('Error fetching products:', error);
       }
