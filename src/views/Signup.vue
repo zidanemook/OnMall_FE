@@ -55,6 +55,11 @@
             ]
       };
     },
+    computed: {
+        apiEndpoint() {
+            return this.$store.state.apiEndpoint;
+        }
+    },
     methods: {
       async onSignup(event) {
         event.preventDefault();
