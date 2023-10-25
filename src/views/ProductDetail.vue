@@ -44,6 +44,9 @@
         <!-- 점수 작성 -->
         <div class="product-rating" v-if="isLoggedIn">
             <b-form-rating v-model="currentRating" stars="10" @change="sendRating"></b-form-rating>
+        </div>
+            
+        <div>
             <p class="mt-2">총평점: {{ ratingvalue }}</p>
         </div>
 

@@ -1,7 +1,8 @@
 export const OrderType = {
     CREATED_AT: "CREATED_AT",
     COMMENT: "COMMENT",
-    RATING: "RATING"
+    RATING: "RATING",
+    PRICE: "PRICE"
 }
 
 export const ProductType = {
