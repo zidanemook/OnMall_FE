@@ -9,9 +9,13 @@
             </div>
 
             <div class="box-search">
-                <input type="text" placeholder="검색..." v-model="searchKeyword" class="search-input"> 
-                <!-- Bind the input to the data property -->
-                <button @click="searchProducts">검색</button> <!-- Add search button -->
+                <input 
+                    type="text" 
+                    placeholder="검색..." 
+                    v-model="searchKeyword" 
+                    class="search-input"
+                    @keyup.enter="searchProducts"> <!-- Add keyup.enter event -->
+                <button @click="searchProducts">검색</button>
             </div>
 
             <!-- 로그인되지 않았을 때 표시 -->
@@ -107,7 +111,7 @@ export default {
                 this.$store.commit('SET_SEARCH_KEYWORD', value);
             }
         },
-        
+
         apiEndpoint() {
             return this.$store.state.apiEndpoint;
         }
