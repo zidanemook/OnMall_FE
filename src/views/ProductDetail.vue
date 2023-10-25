@@ -194,11 +194,11 @@ export default {
         position: relative;
         display: inline-block;
         margin-top: 100px;
-        margin-right: 100px;
+        margin-right: 10px;
     }
 
     .product-image img {
-        width: 600px;
+        width: 500px;
     }
 
     .product-info {
